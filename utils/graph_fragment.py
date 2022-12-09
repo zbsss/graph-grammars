@@ -1,7 +1,7 @@
 class GraphFragment:
     '''
-    This clas represents a graph fragment - the fragment of graph identified with a vertix from which we can build more graph
-    fragments on lower layers. This is a middle_vertix (as mostly this vertix is in the middle of graph fragment).
+    This class represents a graph fragment - the fragment of graph identified with a vertex from which we can build more graph
+    fragments on lower layers. This is a middle_vertex (as mostly this vertex is in the middle of graph fragment).
     For productions P1 to P6 and P10 you use only one graph fragment in the left side of production.
     For other productions you need to choose 2 or more graph fragments by middle vertices for the left side of production,
     choose desired vertices, merge them and modify graph fragments to be updated as merged at the graph fragment list.
