@@ -181,3 +181,61 @@ def set_labels_in_graph_fragment(graph_fragment):
     for vertex in graph_fragment.vertices:
         vertex.label = VertexLabel.E
     graph_fragment.middle_vertex.label = VertexLabel.I
+
+
+
+def yield_fragment_edges():
+    """ Yields edges in graph_fragment_list """
+    for fragment in graph_fragment_list:
+        for edge in fragment.edges:
+            yield edge
+
+def yield_layer_connections_edges():
+    """ Yields edges between layers """
+    for layer_connections in inter_layer_connections:
+        yield layer_connections
+
+def yield_all_edges():
+    """ Yields all edges """
+    yield from yield_fragment_edges()
+    yield from yield_layer_connections_edges()
+
+def yield_all_vertices():
+    """ Yields all vertices """
+    for fragment in graph_fragment_list:
+        for vertex in fragment.vertices:
+            yield vertex
+
+
+def merge_vertices(vertices : list[int]):
+    """
+    Merges provided verticies leaving only the one with smallest ID
+    """
+    smallest = min(vertices)
+    for fragment in graph_fragment_list:    # recconnect edges
+        for id,edge in enumerate(fragment.edges):
+            if(edge[0] in vertices):
+                fragment.edges[id] = (smallest, edge[1])
+            elif(edge[1] in vertices):
+                fragment.edges[id] = (edge[0], smallest)
+
+    for id, layer_connections in enumerate(inter_layer_connections):    # recconnect edges between layers
+        if(layer_connections[0] in vertices):
+            inter_layer_connections[id] = (smallest, layer_connections[1])
+        elif(layer_connections[1] in vertices):
+            inter_layer_connections[id] = (layer_connections[0], smallest)
+
+    vertices.remove(smallest)
+    for fragment in graph_fragment_list:    # remove vertices stored in fragments
+        vertices_to_remove = []
+        for vert in fragment.vertices:
+            if(vert.id in vertices):
+                vertices_to_remove.append(vert)
+        for vert in vertices_to_remove:
+            fragment.vertices.remove(vert)
+
+def find_vertex_with_id(vert_id : int) -> Vertex:
+    """ Returns vertex object from given id """
+    for vertex in yield_all_vertices():
+        if(vertex.id == vert_id):
+            return vertex

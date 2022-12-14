@@ -4,7 +4,7 @@ from utils.common import graph_fragment_list, inter_layer_connections
 from utils.vertex import VertexLabel
 
 label_color_map = {
-    VertexLabel.E: 'blue',
+    VertexLabel.E: '#00B3FF',
     VertexLabel.I: 'orange',
     VertexLabel.i: 'red'
 }
