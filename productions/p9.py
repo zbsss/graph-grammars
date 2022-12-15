@@ -20,7 +20,7 @@ def find_shared_connected_node(i1, i2, generator):
                 shared_nodes.append(other)
     return shared_nodes
 
-def get_vertex_closest(x, y, id_list : list[int]) -> Vertex:
+def get_vertex_closest(x, y, id_list) -> Vertex:
     """
     Finds vertex closest to provided x, y
     """
@@ -91,3 +91,10 @@ def P9(i1, i2, i3, i4):
     merged : Vertex = find_vertex_with_id(merge_e12.id)
     merged.x = merge_x
     merged.y = merge_y
+
+    changed_vertex = []
+    for vertex in yield_all_vertices():
+        if vertex.y < 8 and vertex.x > 2 and vertex.id not in changed_vertex:
+            vertex.x -= 1
+            changed_vertex.append(vertex.id)
+

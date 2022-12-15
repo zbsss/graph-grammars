@@ -181,8 +181,7 @@ def set_labels_in_graph_fragment(graph_fragment):
     for vertex in graph_fragment.vertices:
         vertex.label = VertexLabel.E
     graph_fragment.middle_vertex.label = VertexLabel.I
-
-
+    
 
 def yield_fragment_edges():
     """ Yields edges in graph_fragment_list """
@@ -207,7 +206,7 @@ def yield_all_vertices():
             yield vertex
 
 
-def merge_vertices(vertices : list[int]):
+def merge_vertices(vertices):
     """
     Merges provided verticies leaving only the one with smallest ID
     """
