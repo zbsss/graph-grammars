@@ -42,8 +42,13 @@ def P9(i1, i2, i3, i4):
     global vertices_graph_fragment
     global graph_fragment_list
 
-    merge_vertices([32, 46])    # ONLY FOR TESTS!!    
-    merge_vertices([44,58])     # ONLY FOR TESTS!!
+    ### TEST HORIZONTAL
+    #merge_vertices([32, 46])    # ONLY FOR TESTS!!    
+    #merge_vertices([44,58])     # ONLY FOR TESTS!!
+
+    ### TEST VERTICAL
+    merge_vertices([38,46])    # ONLY FOR TESTS!!    
+    merge_vertices([44,52])     # ONLY FOR TESTS!!
 
     # basic requirements check
     shared_i12_list = find_shared_connected_node(i1, i2, yield_layer_connections_edges)
@@ -87,8 +92,10 @@ def P9(i1, i2, i3, i4):
     merge_e34_list = find_shared_connected_node(i3, i4, yield_fragment_edges)
     merge_e34 = get_vertex_closest(merge_x, merge_y, merge_e34_list)
 
+    mergedID = min(merge_e12.id, merge_e34.id)
     merge_vertices([merge_e12.id, merge_e34.id])
-    merged : Vertex = find_vertex_with_id(merge_e12.id)
+
+    merged : Vertex = find_vertex_with_id(mergedID)
     merged.x = merge_x
     merged.y = merge_y
 
