@@ -5,8 +5,8 @@ import networkx as nx
 import networkx.algorithms.isomorphism as iso
 
 G_base = nx.Graph()
-G_base.add_nodes_from(list(range(8)))
-G_base.add_edges_from([(0, 1), (0, 3), (0, 5), (0, 7), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (7, 1)])
+G_base.add_nodes_from(list(range(9)))
+G_base.add_edges_from([(0, 1), (0, 3), (0, 5), (0, 7), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (7, 8), (8, 1)])
 
 
 def is_isomorphic(frag: GraphFragment) -> bool:
@@ -19,7 +19,7 @@ def is_isomorphic(frag: GraphFragment) -> bool:
 
 def are_label_numbers_valid(frag: GraphFragment) -> bool:
     labels = list(map(lambda v: v.label, frag.vertices))
-    return VertexLabel.I in labels and len(list(filter(lambda l: l == VertexLabel.E, labels))) == 7
+    return VertexLabel.I in labels and len(list(filter(lambda l: l == VertexLabel.E, labels))) == 8
 
 
 def is_valid_thruple(thruple: list) -> bool:
@@ -71,13 +71,11 @@ def validate(frag: GraphFragment) -> None:
     lower = sorted(v_by_y[:3], key=lambda v: v.x)
 
     thruples_valid = list(map(lambda thruple: is_valid_thruple(thruple), [left, right, upper, lower]))
-    thruples_valid = list(filter(lambda is_valid: is_valid, thruples_valid))
-
-    if len(thruples_valid) != 3:
+    if not all(thruples_valid):
         raise Exception("Invalid E vertex placement")
 
 
-def P5(id: int):
+def P6(id: int):
     global vertices_graph_fragment
     global graph_fragment_list
 
@@ -246,3 +244,4 @@ def P5(id: int):
     sorted_graph_fragment_list = sort_graph_fragments(graph_fragment_list)
     graph_fragment_list.clear()
     graph_fragment_list.extend(sorted_graph_fragment_list)
+    print(graph_fragment_list)
