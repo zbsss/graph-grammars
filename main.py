@@ -11,7 +11,7 @@ def main():
     ####### p9 test
     P2(15)
     P2(25)
-    #P9(35,45,50,60)    ### TEST HORIZONTAL
+    # P9(35,45,50,60)    ### TEST HORIZONTAL
     P9(50,55,40,45)     ### TEST VERTICAL
     #######
 

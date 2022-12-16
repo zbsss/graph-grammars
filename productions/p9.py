@@ -43,8 +43,8 @@ def P9(i1, i2, i3, i4):
     global graph_fragment_list
 
     ### TEST HORIZONTAL
-    #merge_vertices([32, 46])    # ONLY FOR TESTS!!    
-    #merge_vertices([44,58])     # ONLY FOR TESTS!!
+    # merge_vertices([32, 46])    # ONLY FOR TESTS!!    
+    # merge_vertices([44,58])     # ONLY FOR TESTS!!
 
     ### TEST VERTICAL
     merge_vertices([38,46])    # ONLY FOR TESTS!!    
@@ -101,7 +101,9 @@ def P9(i1, i2, i3, i4):
 
     changed_vertex = []
     for vertex in yield_all_vertices():
-        if vertex.y < 8 and vertex.x > 2 and vertex.id not in changed_vertex:
+        if vertex.y <= -6 and vertex.y >= -8 and vertex.id not in changed_vertex:
+            vertex.y -= 1
+        if vertex.x > 2 and vertex.id not in changed_vertex:
             vertex.x -= 1
-            changed_vertex.append(vertex.id)
+        changed_vertex.append(vertex.id)
 
