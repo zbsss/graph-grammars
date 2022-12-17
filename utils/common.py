@@ -181,3 +181,62 @@ def set_labels_in_graph_fragment(graph_fragment):
     for vertex in graph_fragment.vertices:
         vertex.label = VertexLabel.E
     graph_fragment.middle_vertex.label = VertexLabel.I
+
+
+def get_lower_left_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.x < graph_fragment.middle_vertex.x and v.y < graph_fragment.middle_vertex.y:
+            return v
+
+
+def get_lower_right_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.x > graph_fragment.middle_vertex.x and v.y < graph_fragment.middle_vertex.y:
+            return v
+
+
+def get_upper_left_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.y > graph_fragment.middle_vertex.y and v.x < graph_fragment.middle_vertex.x:
+            return v
+
+
+def get_upper_right_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.x > graph_fragment.middle_vertex.x and v.y > graph_fragment.middle_vertex.y:
+            return v
+
+
+def merge_verticies(right_vertex : Vertex, left_vertex : Vertex, graphFregments):
+    xPlace = (right_vertex.x + left_vertex.x)/2
+    left_vertex.x = xPlace
+    right_vertex.x = xPlace
+ 
+
+
+    for graphFragment in graphFregments:
+        to_remove = []
+        to_append = []
+
+        for (a, b) in graphFragment.edges:
+            if a == right_vertex.id:
+                to_remove.append((a, b))
+                to_append.append((left_vertex.id, b))
+            if b == right_vertex.id:
+                to_remove.append((a, b))
+                to_append.append((a, left_vertex.id))
+
+        for t in to_remove:
+            graphFragment.edges.remove(t)
+
+        for t in to_append:
+            graphFragment.edges.append(t)
+
+
+        for a in graphFragment.vertices:
+            if a.id == right_vertex.id:
+                graphFragment.vertices.remove(a)
+                break
+
+        graphFragment.vertices.append(left_vertex)
+
