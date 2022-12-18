@@ -9,3 +9,9 @@ class Square:
         self.field_id = field_id
         self.layer_number = layer_number
         self.vertices = []
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return f"<Square: (Field: {self.field_id}, layer: {self.layer_number}, vertices: {self.vertices})>\n"

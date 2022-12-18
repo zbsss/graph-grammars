@@ -88,8 +88,11 @@ def _resolve_vertices_coordinates_for_square(square):
     acc -= breaks
     square_row = _resolve_row_for_square(square)
     square_column = _resolve_column_for_square(square)
-    y_upper_left_vertex = acc - square_row - (square_row // 2)
-    x_upper_left_vertex = square_column + (square_column // 2)
+    # removed breaks between columns to allow merging fragments
+    # y_upper_left_vertex = acc - square_row - (square_row // 2)
+    # x_upper_left_vertex = square_column + (square_column // 2)
+    y_upper_left_vertex = acc - square_row
+    x_upper_left_vertex = square_column
     square.vertices.append(
         Vertex(x_upper_left_vertex, y_upper_left_vertex, _graph_vertices_id_counter, VertexLabel.UNDEFINED))
     _graph_vertices_id_counter += 1
@@ -240,3 +243,24 @@ def merge_verticies(right_vertex : Vertex, left_vertex : Vertex, graphFregments)
 
         graphFragment.vertices.append(left_vertex)
 
+def is_middle_vertex_correct(frag: GraphFragment) -> bool:
+    """
+    This function checks if the middle vertex is properly placed, and has correct label
+    """
+    middle_vertex = frag.middle_vertex
+    others = [vertex for vertex in frag.vertices if vertex.id != middle_vertex.id]
+    middle_x = 0
+    middle_y = 0
+    for vertex in others:
+        middle_x += vertex.x
+        middle_y += vertex.y
+    middle_y /= len(others)
+    middle_x /= len(others)
+
+    return middle_vertex.x == middle_x and middle_vertex.y == middle_y and middle_vertex.label == VertexLabel.I
+
+def compare_vertices(vertex_a: Vertex, vertex_b: Vertex):
+    """
+    This function check if vertex coordinates are the same
+    """
+    return vertex_a.x == vertex_b.x and vertex_a.y == vertex_b.y

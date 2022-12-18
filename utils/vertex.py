@@ -23,3 +23,8 @@ class Vertex:
         self.id = id
         self.label = label
 
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return f"<Vertex: (id: {self.id}, x: {self.x}, y: {self.y})>\n"
