@@ -2,7 +2,8 @@ import math
 from utils.square import Square
 from utils.vertex import Vertex, VertexLabel
 from utils.graph_fragment import GraphFragment
-
+import networkx as nx
+import networkx.algorithms.isomorphism as iso
 
 """
 _BETWEEN_LAYER_BUFFER - constant value which defines space between given graph layers
@@ -264,3 +265,22 @@ def compare_vertices(vertex_a: Vertex, vertex_b: Vertex):
     This function check if vertex coordinates are the same
     """
     return vertex_a.x == vertex_b.x and vertex_a.y == vertex_b.y
+
+def is_graph_isomorphic(frag: GraphFragment):
+    """
+    checks whether the given graph fragment is isomorphic with the default graph
+    A - - - B
+    | \   / |
+    |   C   |
+    | /   \ |
+    D - - - E
+    """
+    default_graph = nx.Graph()
+    default_graph.add_nodes_from(list(range(5)))
+    default_graph.add_edges_from([(0, 1), (0, 2), (0, 3), (1, 2), (1, 4), (2, 3), (2, 4), (3, 4)])
+
+    graph_to_check = nx.Graph()
+    vert_ids = list(map(lambda v: v.id, frag.vertices))
+    graph_to_check.add_nodes_from(vert_ids)
+    graph_to_check.add_edges_from(frag.edges)
+    return iso.is_isomorphic(graph_to_check, default_graph)
