@@ -26,6 +26,9 @@ def P8(id1, id2, id3, id4):
     if not all(map(is_graph_isomorphic, graph_fragments)):
         raise Exception("Given graph is not isomorphic to production left hand side")
 
+    if not all(map(check_vertices_label, graph_fragments)):
+        raise Exception("Invalid vertex label")
+
 
     lower_right_vertex = get_lower_left_vertice_in_graph_fragment(graph_fragment_lower_right)
     lower_left_vertex = get_lower_right_vertice_in_graph_fragment(graph_fragment_lower_left)
