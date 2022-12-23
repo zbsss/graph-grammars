@@ -45,6 +45,15 @@ def P3(id):
         if abs(middle.y - (left.y + right.y) / 2) > 0.0001:
             return  
 
+    # check label of middle vertex
+    if graph_fragment.middle_vertex.label != VertexLabel.I:
+        return
+
+    # check labels of other vertices
+    for vertex in graph_fragment.vertices:
+        if vertex != graph_fragment.middle_vertex and vertex.label != VertexLabel.E:
+            return
+
     # vertex is applicable for further production
     lower_layer_squares = resolve_lower_layer_squares(graph_fragment) # get squares which a new fragment on lower level will occupy
     lower_left_vertex = find_lower_left_vertex(lower_layer_squares) # find the edge lowest vertices on the left
