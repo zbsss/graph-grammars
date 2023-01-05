@@ -1,6 +1,19 @@
 from utils.common import *
 from utils.vertex import VertexLabel
 from utils.sort_utils import sort_graph_fragments
+import networkx as nx
+import networkx.algorithms.isomorphism as iso
+
+def is_isomorphic(frag: GraphFragment) -> bool:
+    G_base = nx.Graph()
+    G_base.add_nodes_from(list(range(6)))
+    G_base.add_edges_from([(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (2, 3), (3, 5), (4, 5), (1, 4)])
+
+    G_frag = nx.Graph()
+    vert_ids = list(map(lambda v: v.id, frag.vertices))
+    G_frag.add_nodes_from(vert_ids)
+    G_frag.add_edges_from(frag.edges)
+    return iso.is_isomorphic(G_frag, G_base)
 
 def P3(id):
     global vertices_graph_fragment
@@ -9,6 +22,10 @@ def P3(id):
 
     # check number of vertices in input graph fragment 
     if len(graph_fragment.vertices) != 6: # if not 6, we shouldn't use P3
+        return
+
+    # check if graph fragment is isomorphic to base graph
+    if not is_isomorphic(graph_fragment):
         return
 
     # check number of not connected vertexes
