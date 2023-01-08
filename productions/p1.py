@@ -4,6 +4,7 @@ from utils.sort_utils import sort_graph_fragments
 
 
 def P1(id):
+    validate(id)
     global vertices_graph_fragment
     global graph_fragment_list
     graph_fragment = vertices_graph_fragment.get(id)  # check if a graph fragment is registered as possible to extend to lower layers
@@ -44,3 +45,9 @@ def P1(id):
     sorted_graph_fragment_list = sort_graph_fragments(graph_fragment_list)
     graph_fragment_list.clear()
     graph_fragment_list.extend(sorted_graph_fragment_list)  # update graph_fragment_list to sorted one
+
+
+def validate(id):
+    if vertices_graph_fragment[id] is None:
+        msg = 'Fragment with id {} does not exist'.format(id)
+        raise KeyError(msg)

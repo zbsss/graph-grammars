@@ -3,6 +3,7 @@ from utils.vertex import VertexLabel
 from utils.sort_utils import sort_graph_fragments
 
 def P2(id):
+    validate(id)
     global vertices_graph_fragment
     global graph_fragment_list
     graph_fragment = vertices_graph_fragment.get(id) # check if a graph fragment is registered as possible to extend to lower layers
@@ -36,9 +37,9 @@ def P2(id):
     for square in lower_layer_squares:
         if upper_left_square == None or square.field_id < upper_left_square.field_id:
             upper_left_square = square
-    
+
     layer_size = 2 ** upper_left_square.layer_number
-  
+
     # identification of squares for each new graph fragment
     for square in lower_layer_squares:
         if upper_right_square is None and square.field_id == upper_left_square.field_id + lower_graph_fragment_width / 2:
@@ -47,7 +48,7 @@ def P2(id):
             lower_left_square = square
         if lower_right_square is None and square.field_id == (upper_left_square.field_id + (lower_graph_fragment_width / 2) * layer_size) + lower_graph_fragment_width / 2:
             lower_right_square = square
-    
+
     upper_left_fragment_squares = return_graph_fragment_squares_from_upper_left_square(lower_layer_squares, upper_left_square)
     upper_right_fragment_squares = return_graph_fragment_squares_from_upper_left_square(lower_layer_squares, upper_right_square)
     lower_left_fragment_squares = return_graph_fragment_squares_from_upper_left_square(lower_layer_squares, lower_left_square)
@@ -88,3 +89,12 @@ def P2(id):
     sorted_graph_fragment_list = sort_graph_fragments(graph_fragment_list)
     graph_fragment_list.clear()
     graph_fragment_list.extend(sorted_graph_fragment_list)
+
+def validate(id):
+    if vertices_graph_fragment[id] is None:
+        msg = 'Fragment with id {} does not exist'.format(id)
+        raise KeyError(msg)
+    if len(vertices_graph_fragment[id].vertices) != 5:
+        number_of_vertices = len(vertices_graph_fragment[id].vertices)
+        msg = 'Fragment with id {} contains {} vertices, but should have 5'.format(id, number_of_vertices)
+        raise ValueError(msg)
