@@ -55,13 +55,13 @@ def P9(i1, i2, i3, i4):
     #find_vertex_with_id(20).label = VertexLabel.E
 
     ### TEST HORIZONTAL
-    merge_vertices([32, 46])    # ONLY FOR TESTS!!    
-    merge_vertices([44,58])     # ONLY FOR TESTS!!
+    # merge_vertices([32, 46])    # ONLY FOR TESTS!!    
+    # merge_vertices([44,58])     # ONLY FOR TESTS!!
     
     #vertices_graph_fragment[35].edges.remove((32, 34))
     ### TEST VERTICAL
-    #merge_vertices([38,46])    # ONLY FOR TESTS!!    
-    #merge_vertices([44,52])     # ONLY FOR TESTS!!
+    merge_vertices([38,46])    # ONLY FOR TESTS!!    
+    merge_vertices([44,52])     # ONLY FOR TESTS!!
     # basic requirements check
     shared_i12_list = find_shared_connected_node(i1, i2, yield_layer_connections_edges)
     if(len(shared_i12_list) != 1):
@@ -147,11 +147,4 @@ def P9(i1, i2, i3, i4):
     merged.x = merge_x
     merged.y = merge_y
 
-    changed_vertex = []
-    for vertex in yield_all_vertices():
-        if vertex.y <= -6 and vertex.y >= -8 and vertex.id not in changed_vertex:
-            vertex.y -= 1
-        if vertex.x > 2 and vertex.id not in changed_vertex:
-            vertex.x -= 1
-        changed_vertex.append(vertex.id)
 

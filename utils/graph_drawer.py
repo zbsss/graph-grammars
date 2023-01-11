@@ -30,7 +30,14 @@ def draw_graph():
     pos = {}
     for graph_fragment in graph_fragment_list:
         for vertex in graph_fragment.vertices:
-            pos[vertex.id] = (vertex.x, vertex.y)
+            if vertex.x > 2 and vertex.y < -8:
+                pos[vertex.id] = (vertex.x-1, vertex.y)
+            elif vertex.y < -5 and vertex.y > -9 and vertex.x < 3:
+                pos[vertex.id] = (vertex.x, vertex.y-1)
+            elif vertex.y < -5 and vertex.y > -9 and vertex.x > 2:
+                pos[vertex.id] = (vertex.x-1, vertex.y-1)
+            else:
+                pos[vertex.id] = (vertex.x, vertex.y)
     nx.draw_networkx(G, pos, node_color=color_list)  # , node_size = 10, font_size=1)
     ax = plt.gca()
     plt.axis("off")
