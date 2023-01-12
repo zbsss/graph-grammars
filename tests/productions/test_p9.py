@@ -7,7 +7,7 @@ from utils.graph_drawer import draw_graph
 from utils.common import *
 
 
-class TestP2(unittest.TestCase):
+class TestP9(unittest.TestCase):
 
     def setUp(self):
         pass
