@@ -6,28 +6,13 @@ from productions.p9 import P9
 from utils.graph_drawer import draw_graph
 from utils.common import *
 
-def reset_all():
-    global _BETWEEN_LAYER_BUFFER 
-    global _graph_vertices_id_counter
-    global _start_vertex
-    global _start_fragment
-    global vertices_graph_fragment
-    global graph_fragment_list
-    global inter_layer_connections
-
-    _BETWEEN_LAYER_BUFFER = 1  # possible to modify
-    _graph_vertices_id_counter = 1
-    _start_vertex = Vertex(0, 0, 0, VertexLabel.I)
-    _start_fragment = GraphFragment([], [_start_vertex], -1, [], _start_vertex)
-    vertices_graph_fragment = {0: _start_fragment}
-    graph_fragment_list = [_start_fragment]
-    inter_layer_connections = []
 
 class TestP2(unittest.TestCase):
 
     def setUp(self):
         pass
-
+    def tearDown(self):
+        reset_global_state()
 
     def test_vertical(self):
         P1(0)
@@ -38,16 +23,93 @@ class TestP2(unittest.TestCase):
         merge_vertices([44,52])   
         P9(50,55,40,45)   
 
-        draw_graph()
-
     def test_horizontal(self):
         P1(0)
         P2(5)
         P2(20)
         P2(25)
-
         merge_vertices([32, 46])    
-        merge_vertices([44,58])    
+        merge_vertices([44,58]) 
         P9(35,45,50,60)
 
-        draw_graph()
+    def test_horizontal_no_merge1(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        #merge_vertices([44,58]) 
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_no_edge_leafs(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        global vertices_graph_fragment
+        vertices_graph_fragment[35].edges.remove((32, 34))
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_no_edge_center(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        global vertices_graph_fragment
+        vertices_graph_fragment[35].edges.remove((34, 35))
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_no_edge_upper(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        global inter_layer_connections
+        inter_layer_connections.remove((35, 20))
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_wrong_label_center(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        find_vertex_with_id(20).label = VertexLabel.E
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_wrong_label_leaf(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        find_vertex_with_id(32).label = VertexLabel.i
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_wrong_label_upper(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        find_vertex_with_id(20).label = VertexLabel.E
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))
+
+    def test_horizontal_wrong_position(self):
+        P1(0)
+        P2(5)
+        P2(20)
+        P2(25)
+        merge_vertices([32, 46])    
+        merge_vertices([44,58]) 
+        find_vertex_with_id(34).x = 0
+        self.assertRaises(ValueError, lambda: P9(35,45,50,60))

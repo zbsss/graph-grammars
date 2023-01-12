@@ -39,6 +39,9 @@ def get_vertex_closest(x, y, id_list) -> Vertex:
     def sort_key(e):
         return e[0]
     dist_list.sort(key=sort_key)
+    if(dist_list[0][0] > 0.1):
+        raise ValueError()
+
     return dist_list[0][1]
         
 def P9(i1, i2, i3, i4):
@@ -52,16 +55,17 @@ def P9(i1, i2, i3, i4):
     """
     global vertices_graph_fragment
     global graph_fragment_list
-    #find_vertex_with_id(20).label = VertexLabel.E
 
     ### TEST HORIZONTAL
-    # merge_vertices([32, 46])    # ONLY FOR TESTS!!    
-    # merge_vertices([44,58])     # ONLY FOR TESTS!!
+    #merge_vertices([32, 46])    # ONLY FOR TESTS!!    
+    #merge_vertices([44,58])     # ONLY FOR TESTS!!
     
     #vertices_graph_fragment[35].edges.remove((32, 34))
     ### TEST VERTICAL
-    merge_vertices([38,46])    # ONLY FOR TESTS!!    
-    merge_vertices([44,52])     # ONLY FOR TESTS!!
+    #merge_vertices([38,46])    # ONLY FOR TESTS!!    
+    #merge_vertices([44,52])     # ONLY FOR TESTS!!
+
+
     # basic requirements check
     shared_i12_list = find_shared_connected_node(i1, i2, yield_layer_connections_edges)
     if(len(shared_i12_list) != 1):
@@ -91,6 +95,7 @@ def P9(i1, i2, i3, i4):
 
     # find both E nodes shared between 2 sides
     shared_e13_list = find_shared_connected_node(i1, i3, yield_fragment_edges)
+    
     if(len(shared_e13_list) != 1):
         raise ValueError()
     shared_e13 : Vertex = find_vertex_with_id(shared_e13_list[0])
@@ -126,7 +131,6 @@ def P9(i1, i2, i3, i4):
     merge_e34 = get_vertex_closest(merge_x, merge_y, merge_e34_list)
     if(merge_e34.label != VertexLabel.E):
         raise ValueError()
-
     if(not edge_exists(shared_e24.id, merge_e12.id, yield_all_edges)):
         raise ValueError()
     if(not edge_exists(shared_e24.id, merge_e34.id, yield_all_edges)):
