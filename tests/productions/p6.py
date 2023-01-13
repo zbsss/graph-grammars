@@ -1,5 +1,6 @@
 from productions.p1 import P1
 from productions.p6 import P6, is_isomorphic
+from tests.productions import p5
 from utils.common import vertices_graph_fragment, graph_fragment_list
 from utils.graph_drawer import draw_graph
 from utils.graph_fragment import GraphFragment
@@ -16,7 +17,12 @@ class TestP6(unittest.TestCase):
         prepare_graph()
         P6(5)
         draw_graph()
-        self.assertEquals(len(graph_fragment_list), 6)
+        self.assertEqual(len(graph_fragment_list), 6)
+
+    def test_fail_on_too_few_broken_edges(self):
+        p5.prepare_graph()
+        draw_graph()
+        self.assertRaises(Exception, lambda: P6(5))
 
     def test_fail_on_invalid_middle_label(self):
         graph_fragment = prepare_graph()

@@ -1,35 +1,11 @@
 from productions.p1 import P1
 from productions.p5 import is_isomorphic, P5
+from tests.productions import p6
 from utils.common import vertices_graph_fragment, graph_fragment_list
 from utils.graph_drawer import draw_graph
 from utils.graph_fragment import GraphFragment
 from utils.vertex import Vertex, VertexLabel
 import unittest
-
-
-# def test_isomorphism():
-#     print(is_isomorphic(get_isomorphic_graph_fragment()))
-
-# def test_success():
-#     P1(0)
-#     graph_fragment = vertices_graph_fragment.get(5)
-#     print(list(map(lambda v: (v.x, v.y, v.id), graph_fragment.vertices)))
-#     graph_fragment.vertices.extend(list([Vertex(0, -1.5, 100, VertexLabel.E), Vertex(0.5, -1, 200, VertexLabel.E),
-#                                          Vertex(1, -1.5, 300, VertexLabel.E)]))
-#     graph_fragment.edges.extend(list([(3, 100), (100, 1), (1, 200), (200, 2), (2, 300), (300, 4)]))
-#     graph_fragment.edges.remove((1, 3))
-#     graph_fragment.edges.remove((1, 2))
-#     graph_fragment.edges.remove((4, 2))
-#     print(graph_fragment.edges)
-#     print(list(map(lambda v: v.label, graph_fragment.vertices)))
-#     P5(5)
-#     draw_graph()
-
-
-# test_isomorphism()
-# test_success()
-
-## from P5
 
 
 class TestP5(unittest.TestCase):
@@ -41,7 +17,18 @@ class TestP5(unittest.TestCase):
         prepare_graph()
         P5(5)
         draw_graph()
-        self.assertEquals(len(graph_fragment_list), 6)
+        self.assertEqual(len(graph_fragment_list), 6)
+
+    def test_success_side(self):
+        prepare_graph_side()
+        P5(5)
+        draw_graph()
+        self.assertEqual(len(graph_fragment_list), 6)
+
+    def test_fail_on_too_many_broken_edges(self):
+        p6.prepare_graph()
+        draw_graph()
+        self.assertRaises(Exception, lambda: P5(5))
 
     def test_fail_on_invalid_middle_label(self):
         graph_fragment = prepare_graph()
@@ -85,6 +72,19 @@ def prepare_graph() -> GraphFragment:
     graph_fragment.edges.remove((1, 3))
     graph_fragment.edges.remove((1, 2))
     graph_fragment.edges.remove((4, 2))
+    return graph_fragment
+
+
+def prepare_graph_side() -> GraphFragment:
+    P1(0)
+    graph_fragment = vertices_graph_fragment.get(5)
+    print(list(map(lambda v: (v.x, v.y, v.id), graph_fragment.vertices)))
+    graph_fragment.vertices.extend(list([Vertex(0, -1.5, 100, VertexLabel.E), Vertex(0.5, -1, 200, VertexLabel.E),
+                                         Vertex(0.5, -2, 300, VertexLabel.E)]))
+    graph_fragment.edges.extend(list([(3, 100), (100, 1), (1, 200), (200, 2), (3, 300), (300, 4)]))
+    graph_fragment.edges.remove((1, 3))
+    graph_fragment.edges.remove((1, 2))
+    graph_fragment.edges.remove((3, 4))
     return graph_fragment
 
 
