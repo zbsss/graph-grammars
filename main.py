@@ -4,7 +4,6 @@ from utils.graph_drawer import draw_graph
 from utils.vertex import Vertex, VertexLabel
 from utils.common import vertices_graph_fragment
 
-
 def main():
     P1(0)
     graph_fragment = vertices_graph_fragment.get(5)
