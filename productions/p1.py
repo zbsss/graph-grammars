@@ -50,4 +50,9 @@ def P1(id):
 def validate(id):
     if vertices_graph_fragment[id] is None:
         msg = 'Fragment with id {} does not exist'.format(id)
-        raise KeyError(msg)
+        raise Exception(msg)
+    if vertices_graph_fragment[id].middle_vertex.label.name != 'I':
+        vertex_type = vertices_graph_fragment[id].middle_vertex.label.name
+        msg = 'Incorrect type of middle vertex for fragment with id {}.' \
+              ' Expected type is {}, but we actual type is {}'.format(id, 'I', vertex_type)
+        raise Exception(msg)
