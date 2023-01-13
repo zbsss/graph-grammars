@@ -9,7 +9,7 @@ def reload_libs():
 
 class P3TestMethods(unittest.TestCase):
     # correct circumstances - 2 broken edge with vertex in between
-    def test_one_broken_edge(self):
+    def test_two_broken_edges(self):
         reload_libs()
         P1 = productions.p1.P1
         P4 = productions.p4.P4
@@ -25,7 +25,7 @@ class P3TestMethods(unittest.TestCase):
         self.assertIsNotNone(vertices_graph_fragment.get(10))
 
     # incorrect circumstances - 1 broken edgee with vertex in between of them
-    def test_too_many_broken_edges(self):
+    def test_not_enough_broken_edges(self):
         reload_libs()
         P1 = productions.p1.P1
         P4 = productions.p4.P4
