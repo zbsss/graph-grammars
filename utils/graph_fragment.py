@@ -14,3 +14,9 @@ class GraphFragment:
         self.layer_number = layer_number
         self.edges = edges
         self.middle_vertex = middle_vertex
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return f"<Graph Fragment: (squares: {self.squares}, vertices: {self.vertices}, layerNumber: {self.layer_number}, middle_vertex={self.middle_vertex})>\n"

@@ -245,6 +245,106 @@ def find_vertex_with_id(vert_id : int) -> Vertex:
         if(vertex.id == vert_id):
             return vertex
 
+
+def get_lower_left_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.x < graph_fragment.middle_vertex.x and v.y < graph_fragment.middle_vertex.y:
+            return v
+
+
+def get_lower_right_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.x > graph_fragment.middle_vertex.x and v.y < graph_fragment.middle_vertex.y:
+            return v
+
+
+def get_upper_left_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.y > graph_fragment.middle_vertex.y and v.x < graph_fragment.middle_vertex.x:
+            return v
+
+
+def get_upper_right_vertice_in_graph_fragment(graph_fragment: GraphFragment) -> Vertex:
+    for v in graph_fragment.vertices:
+        if v.x > graph_fragment.middle_vertex.x and v.y > graph_fragment.middle_vertex.y:
+            return v
+
+
+def merge_verticies(right_vertex : Vertex, left_vertex : Vertex, graphFregments):
+    """
+    merges two vertices into one, and removes edges
+    """
+    for graphFragment in graphFregments:
+        to_remove = []
+        to_append = []
+
+        for (a, b) in graphFragment.edges:
+            if a == right_vertex.id:
+                to_remove.append((a, b))
+                to_append.append((left_vertex.id, b))
+            if b == right_vertex.id:
+                to_remove.append((a, b))
+                to_append.append((a, left_vertex.id))
+
+        for t in to_remove:
+            graphFragment.edges.remove(t)
+
+        for t in to_append:
+            graphFragment.edges.append(t)
+
+
+        for a in graphFragment.vertices:
+            if a.id == right_vertex.id:
+                graphFragment.vertices.remove(a)
+                break
+
+        graphFragment.vertices.append(left_vertex)
+
+def is_middle_vertex_correct(frag: GraphFragment) -> bool:
+    """
+    This function checks if the middle vertex is properly placed, and has correct label
+    """
+    middle_vertex = frag.middle_vertex
+    others = [vertex for vertex in frag.vertices if vertex.id != middle_vertex.id]
+    middle_x = 0
+    middle_y = 0
+    for vertex in others:
+        middle_x += vertex.x
+        middle_y += vertex.y
+    middle_y /= len(others)
+    middle_x /= len(others)
+
+    return middle_vertex.x == middle_x and middle_vertex.y == middle_y and middle_vertex.label == VertexLabel.I
+
+def compare_vertices(vertex_a: Vertex, vertex_b: Vertex):
+    """
+    This function check if vertex coordinates are the same
+    """
+    return vertex_a.x == vertex_b.x and vertex_a.y == vertex_b.y
+
+def is_graph_isomorphic(frag: GraphFragment):
+    """
+    checks whether the given graph fragment is isomorphic with the default graph
+    A - - - B
+    | \   / |
+    |   C   |
+    | /   \ |
+    D - - - E
+    """
+    default_graph = nx.Graph()
+    default_graph.add_nodes_from(list(range(5)))
+    default_graph.add_edges_from([(0, 1), (0, 2), (0, 3), (1, 2), (1, 4), (2, 3), (2, 4), (3, 4)])
+
+    graph_to_check = nx.Graph()
+    vert_ids = list(map(lambda v: v.id, frag.vertices))
+    graph_to_check.add_nodes_from(vert_ids)
+    graph_to_check.add_edges_from(frag.edges)
+    return iso.is_isomorphic(graph_to_check, default_graph)
+
+def check_vertices_label(graph_fragment: GraphFragment):
+    labels_on_edge = [vertex.label for vertex in graph_fragment.vertices if vertex.id != graph_fragment.middle_vertex.id]
+    return all(map(lambda x: x == VertexLabel.E, labels_on_edge))
+
 def reset_global_state():
     """
     resets global state
