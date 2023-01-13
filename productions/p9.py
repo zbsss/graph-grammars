@@ -39,7 +39,7 @@ def get_vertex_closest(x, y, id_list) -> Vertex:
     def sort_key(e):
         return e[0]
     dist_list.sort(key=sort_key)
-    if(dist_list[0][0] > 0.1):
+    if(dist_list[0][0] > 0.0001):
         raise ValueError()
 
     return dist_list[0][1]
@@ -56,16 +56,14 @@ def P9(i1, i2, i3, i4):
     global vertices_graph_fragment
     global graph_fragment_list
 
-    ### TEST HORIZONTAL
-    #merge_vertices([32, 46])    # ONLY FOR TESTS!!    
-    #merge_vertices([44,58])     # ONLY FOR TESTS!!
-    
-    #vertices_graph_fragment[35].edges.remove((32, 34))
-    ### TEST VERTICAL
-    #merge_vertices([38,46])    # ONLY FOR TESTS!!    
-    #merge_vertices([44,52])     # ONLY FOR TESTS!!
-
-
+    if(find_vertex_with_id(i1).label != VertexLabel.I):
+        raise ValueError()
+    if(find_vertex_with_id(i2).label != VertexLabel.I):
+        raise ValueError()
+    if(find_vertex_with_id(i3).label != VertexLabel.I):
+        raise ValueError()
+    if(find_vertex_with_id(i4).label != VertexLabel.I):
+        raise ValueError()
     # basic requirements check
     shared_i12_list = find_shared_connected_node(i1, i2, yield_layer_connections_edges)
     if(len(shared_i12_list) != 1):

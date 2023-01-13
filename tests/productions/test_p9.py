@@ -19,6 +19,8 @@ class TestP9(unittest.TestCase):
         P2(5)
         P2(15)
         P2(25)
+        P2(10)
+        P2(20)
         merge_vertices([38,46])   
         merge_vertices([44,52])   
         P9(50,55,40,45)   
@@ -81,7 +83,7 @@ class TestP9(unittest.TestCase):
         P2(25)
         merge_vertices([32, 46])    
         merge_vertices([44,58]) 
-        find_vertex_with_id(20).label = VertexLabel.E
+        find_vertex_with_id(35).label = VertexLabel.E
         self.assertRaises(ValueError, lambda: P9(35,45,50,60))
 
     def test_horizontal_wrong_label_leaf(self):
@@ -112,4 +114,5 @@ class TestP9(unittest.TestCase):
         merge_vertices([32, 46])    
         merge_vertices([44,58]) 
         find_vertex_with_id(34).x = 0
+        draw_graph()
         self.assertRaises(ValueError, lambda: P9(35,45,50,60))

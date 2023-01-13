@@ -89,11 +89,13 @@ def _resolve_vertices_coordinates_for_square(square):
     acc -= breaks
     square_row = _resolve_row_for_square(square)
     square_column = _resolve_column_for_square(square)
-    # removed breaks between columns to allow merging fragments
-    # y_upper_left_vertex = acc - square_row - (square_row // 2)
-    # x_upper_left_vertex = square_column + (square_column // 2)
-    y_upper_left_vertex = acc - square_row
-    x_upper_left_vertex = square_column
+    if(False):
+        # removed breaks between columns to allow merging fragments
+        y_upper_left_vertex = acc - square_row - (square_row // 2)
+        x_upper_left_vertex = square_column + (square_column // 2)
+    else:
+        y_upper_left_vertex = acc - square_row
+        x_upper_left_vertex = square_column
     square.vertices.append(
         Vertex(x_upper_left_vertex, y_upper_left_vertex, graph_vertices_id_counter, VertexLabel.UNDEFINED))
     graph_vertices_id_counter += 1
