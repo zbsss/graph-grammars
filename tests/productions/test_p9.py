@@ -114,5 +114,4 @@ class TestP9(unittest.TestCase):
         merge_vertices([32, 46])    
         merge_vertices([44,58]) 
         find_vertex_with_id(34).x = 0
-        draw_graph()
         self.assertRaises(ValueError, lambda: P9(35,45,50,60))
