@@ -60,3 +60,4 @@ def P8(id1, id2, id3, id4):
     merge_verticies(middle_right_vertex, middle_left_vertex, [graph_fragment_upper_right, graph_fragment_lower_right])
     merge_verticies(lower_right_vertex, lower_left_vertex, [graph_fragment_lower_right])
 
+    fix_nodes_id()

@@ -244,4 +244,4 @@ def P6(id: int):
     sorted_graph_fragment_list = sort_graph_fragments(graph_fragment_list)
     graph_fragment_list.clear()
     graph_fragment_list.extend(sorted_graph_fragment_list)
-    print(graph_fragment_list)
+    fix_nodes_id()

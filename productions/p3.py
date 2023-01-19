@@ -154,3 +154,4 @@ def P3(id):
     sorted_graph_fragment_list = sort_graph_fragments(graph_fragment_list)
     graph_fragment_list.clear()
     graph_fragment_list.extend(sorted_graph_fragment_list)
+    fix_nodes_id()

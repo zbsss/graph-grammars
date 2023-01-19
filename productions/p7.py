@@ -56,4 +56,5 @@ def P7(id1, id2, id3, id4):
     merge_verticies(lower_right_vertex, lower_left_vertex, [graph_fragment_lower_right])
     merge_verticies(upper_right_vertex, upper_left_vertex, [graph_fragment_upper_right])
 
+    fix_nodes_id()
 

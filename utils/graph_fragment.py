@@ -13,6 +13,9 @@ class GraphFragment:
         self.vertices = vertices
         self.layer_number = layer_number
         self.edges = edges
+        for i in range(len(self.edges)):
+            self.edges[i] = (min(self.edges[i][0], self.edges[i][1]), max(self.edges[i][0], self.edges[i][1]))
+
         self.middle_vertex = middle_vertex
 
     def __repr__(self):

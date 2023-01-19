@@ -45,6 +45,8 @@ def P1(id):
     sorted_graph_fragment_list = sort_graph_fragments(graph_fragment_list)
     graph_fragment_list.clear()
     graph_fragment_list.extend(sorted_graph_fragment_list)  # update graph_fragment_list to sorted one
+    fix_nodes_id()
+
 
 
 def validate(id):

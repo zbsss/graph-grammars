@@ -21,7 +21,20 @@ _start_fragment = GraphFragment([], [_start_vertex], -1, [], _start_vertex)
 vertices_graph_fragment = {0: _start_fragment}
 graph_fragment_list = [_start_fragment]
 inter_layer_connections = []
+split_nodes = False
 
+def set_split_nodes(val):
+    global split_nodes
+    split_nodes = val
+
+def fix_nodes_id():
+    global graph_fragment_list
+    for frag in graph_fragment_list:
+        for id, ed in enumerate(frag.edges):
+            e0 = ed[0]
+            e1 = ed[1]
+            frag.edges[id] = (min(e0, e1), max(e0, e1))
+            
 
 def _resolve_row_for_square(square):
     """
@@ -89,7 +102,9 @@ def _resolve_vertices_coordinates_for_square(square):
     acc -= breaks
     square_row = _resolve_row_for_square(square)
     square_column = _resolve_column_for_square(square)
-    if(False):
+    global split_nodes
+
+    if(split_nodes):
         # removed breaks between columns to allow merging fragments
         y_upper_left_vertex = acc - square_row - (square_row // 2)
         x_upper_left_vertex = square_column + (square_column // 2)
@@ -216,6 +231,7 @@ def merge_vertices(vertices):
     """
     Merges provided verticies leaving only the one with smallest ID
     """
+    vertices.sort()
     smallest = min(vertices)
     for fragment in graph_fragment_list:    # recconnect edges
         for id,edge in enumerate(fragment.edges):
@@ -238,6 +254,10 @@ def merge_vertices(vertices):
                 vertices_to_remove.append(vert)
         for vert in vertices_to_remove:
             fragment.vertices.remove(vert)
+    
+    for fragment in graph_fragment_list:    # recconnect edges
+        for i in range(len(fragment.edges)):
+            fragment.edges[i] = (min(fragment.edges[i][0], fragment.edges[i][1]), max(fragment.edges[i][0], fragment.edges[i][1]))
 
 def find_vertex_with_id(vert_id : int) -> Vertex:
     """ Returns vertex object from given id """

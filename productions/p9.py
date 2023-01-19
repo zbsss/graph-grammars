@@ -150,3 +150,4 @@ def P9(i1, i2, i3, i4):
     merged.y = merge_y
 
 
+    fix_nodes_id()
