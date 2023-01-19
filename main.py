@@ -11,7 +11,7 @@ def main():
     P1(0)
     P2(5)
     P2(20)
-    P2(25)
+    P1(25)
     draw_graph()
 
 if __name__ == "__main__":
