@@ -361,3 +361,12 @@ def reset_global_state():
     graph_fragment_list.append(_start_fragment)
     inter_layer_connections.clear()
     graph_vertices_id_counter = 1
+
+
+def fix_nodes_id():
+    global graph_fragment_list
+    for frag in graph_fragment_list:
+        for id, ed in enumerate(frag.edges):
+            e0 = ed[0]
+            e1 = ed[1]
+            frag.edges[id] = (min(e0, e1), max(e0, e1))
