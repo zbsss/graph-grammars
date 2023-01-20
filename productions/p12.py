@@ -13,10 +13,10 @@ def P12(id1, id2, id3):
 
     print(f1.edges)
     print(right_most)
-    # try:
-    #     f1.edges.remove((right_most[0].id, right_most[1].id))
-    # except:
-    #     f1.edges.remove((right_most[1].id, right_most[0].id))
+    try:
+        f1.edges.remove((right_most[0].id, right_most[1].id))
+    except:
+        f1.edges.remove((right_most[1].id, right_most[0].id))
 
     if left_most[0] in f2.vertices:
         merge_verticies(right_most[0], left_most[0], [f1, f2])

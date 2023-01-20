@@ -1,12 +1,8 @@
 from utils.common import *
-from utils.vertex import VertexLabel
-from utils.sort_utils import sort_graph_fragments
 from utils.common import merge_verticies
 
-def P7(id1, id2, id3, id4, vertical=False, affected_ids = []):
-    global vertices_graph_fragment
-    global graph_fragment_list
 
+def P7(id1, id2, id3, id4, vertical=False, affected_ids=[]):
     f1 = vertices_graph_fragment[id1]
     f2 = vertices_graph_fragment[id2]
     f3 = vertices_graph_fragment[id3]
@@ -58,8 +54,6 @@ def P7(id1, id2, id3, id4, vertical=False, affected_ids = []):
             if v2_lower[0] in f.vertices:
                 merge_verticies(v2_lower[0], v3_upper[1], [f])
 
-
     for f in [f1, f2, f3, f4]:
         f.vertices = list(set(f.vertices))
     fix_nodes_id()
-
