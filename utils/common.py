@@ -297,8 +297,8 @@ def merge_verticies(right_vertex : Vertex, left_vertex : Vertex, graphFregments)
             if a.id == right_vertex.id:
                 graphFragment.vertices.remove(a)
                 break
-
-        graphFragment.vertices.append(left_vertex)
+        if not left_vertex in graphFragment.vertices:
+            graphFragment.vertices.append(left_vertex)
 
 def is_middle_vertex_correct(frag: GraphFragment) -> bool:
     """
