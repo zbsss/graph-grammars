@@ -57,8 +57,7 @@ def P7(id1, id2, id3, id4):
     # because all vertecies have the same coordinates we have to check only one
     if middle_left_vertex.x != (lower_left_vertex.x + upper_left_vertex.x)/2 and middle_left_vertex.y != (lower_left_vertex.y + upper_left_vertex.y)/2:
         raise Exception("Middle vertex in wrong position")
-    print(middle_right_vertex.id)
-    # return
+
     if middle_right_vertex.id == middle_left_vertex.id:
         lower_right_vertex = get_lower_left_vertice_in_graph_fragment(graph_fragment_upper_left)
         lower_left_vertex = get_upper_left_vertice_in_graph_fragment(graph_fragment_lower_left)
