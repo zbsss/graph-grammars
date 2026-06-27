@@ -3,15 +3,15 @@ from productions.p2 import P2
 from productions.p9 import P9
 from productions.p3 import P3
 from productions.p11_p12_p13 import P11, P12, P13
-from utils.graph_drawer import draw_graph, set_position_move
+from utils.graph_drawer import draw_graph, set_draw_position_move
 from utils.vertex import Vertex, VertexLabel
 from utils.common import vertices_graph_fragment, set_split_nodes
 
 def P10(v):
     P1(v)
-    
+
 def TaskE():
-    set_position_move(False)
+    set_draw_position_move(False)
 
     P1(0)
     draw_graph()
@@ -22,7 +22,7 @@ def TaskE():
     P10(10)
     P10(20)
     P10(25)
-    #draw_graph()
+    draw_graph()
 
     P13(69, 89, 72, 84, 86, 98)
     #draw_graph()
@@ -44,7 +44,7 @@ def TaskE():
     P10(30)
     P10(40)
     P10(45)
-    #draw_graph()
+    draw_graph()
 
     P13(389, 409, 392, 404, 406, 418)
     #draw_graph()
@@ -78,7 +78,7 @@ def TaskE():
     P10(110)
     P10(120)
     P10(125)
-    #draw_graph()
+    draw_graph()
 
     P13(1669, 1689, 1672, 1684, 1686, 1698)
     P13(1649, 1669, 1658, 1664, 1666, 1672)

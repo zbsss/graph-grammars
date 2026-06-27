@@ -11,8 +11,9 @@ label_color_map = {
 }
 color_list = []  # empty color list to store color value for each graph 
 position_move = False
+number = 0
 
-def set_position_move(val):
+def set_draw_position_move(val):
     global position_move
     position_move = val
 
@@ -22,6 +23,7 @@ def draw_graph(inter_layer = False):
     '''
     global color_list
     global position_move
+    global number
     color_list.clear()
     G = nx.Graph()
     for graph_fragment in graph_fragment_list:
@@ -57,4 +59,8 @@ def draw_graph(inter_layer = False):
     nx.draw_networkx(G, pos, node_color=color_list)  # , node_size = 10, font_size=1)
     ax = plt.gca()
     plt.axis("off")
-    plt.show()
+    #manager = plt.get_current_fig_manager()
+    #manager.full_screen_toggle()
+    #plt.show()
+    plt.savefig(str(number))
+    number += 1
